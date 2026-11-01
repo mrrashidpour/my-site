@@ -15,67 +15,50 @@ jobs:
     environment: s3
 
     env:
-      # Arvan Cloud S3 Configuration
+      # Arvan Cloud Configuration
       AWS_ENDPOINT: https://s3.ir-central1.arvanstorage.ir
-      AWS_DEFAULT_REGION: ir-central1
       AWS_BUCKET_NAME: mrsite
+      AWS_DEFAULT_REGION: ir-central1
 
       # GitHub Environment Secrets
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     steps:
-      # 1. Checkout Repository
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Install AWS CLI v2
-      - name: Install AWS CLI v2
+      - name: Verify AWS CLI
         run: |
-          curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-
-          unzip -q awscliv2.zip
-
-          sudo ./aws/install
-
           aws --version
 
-      # 3. Verify Configuration
-      - name: Verify AWS Configuration
-        shell: bash
+      - name: Verify Configuration
         run: |
-          set -e
-
           if [ -z "$AWS_ACCESS_KEY_ID" ]; then
-            echo "ERROR: AWS_ACCESS_KEY_ID is missing!"
+            echo "AWS_ACCESS_KEY_ID is missing!"
             exit 1
           fi
 
           if [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
-            echo "ERROR: AWS_SECRET_ACCESS_KEY is missing!"
-            exit 1
-          fi
-
-          if [ -z "$AWS_ENDPOINT" ]; then
-            echo "ERROR: AWS_ENDPOINT is missing!"
-            exit 1
-          fi
-
-          if [ -z "$AWS_BUCKET_NAME" ]; then
-            echo "ERROR: AWS_BUCKET_NAME is missing!"
+            echo "AWS_SECRET_ACCESS_KEY is missing!"
             exit 1
           fi
 
           echo "AWS configuration is ready."
 
-      # 4. Upload HTML Files
-      - name: Deploy HTML files
-        shell: bash
+      - name: Deploy to S3 with public access
         run: |
-          set -e
+          # Upload all files and remove deleted files from bucket
+          aws s3 sync . "s3://${AWS_BUCKET_NAME}" \
+            --exclude ".git/*" \
+            --exclude ".github/*" \
+            --exclude "README.md" \
+            --exclude ".gitignore" \
+            --delete \
+            --acl public-read \
+            --endpoint-url "$AWS_ENDPOINT"
 
-          echo "Uploading HTML files..."
-
+          # Set Cache for HTML files
           aws s3 sync . "s3://${AWS_BUCKET_NAME}" \
             --exclude "*" \
             --include "*.html" \
@@ -83,36 +66,21 @@ jobs:
             --acl public-read \
             --endpoint-url "$AWS_ENDPOINT"
 
-      # 5. Upload Static Assets
-      - name: Deploy Static Assets
-        shell: bash
-        run: |
-          set -e
-
-          echo "Uploading static assets..."
-
+          # Set Cache for static assets
           aws s3 sync . "s3://${AWS_BUCKET_NAME}" \
             --exclude "*" \
-            --include "*.css" \
-            --include "*.js" \
-            --include "*.svg" \
             --include "*.png" \
             --include "*.jpg" \
             --include "*.jpeg" \
             --include "*.gif" \
+            --include "*.svg" \
+            --include "*.css" \
+            --include "*.js" \
             --include "*.webp" \
             --include "*.ico" \
-            --cache-control "public, max-age=86400" \
+            --cache-control "max-age=86400" \
             --acl public-read \
             --endpoint-url "$AWS_ENDPOINT"
 
-      # 6. Deployment Completed
-      - name: Deployment Summary
-        run: |
-          echo "================================"
-          echo "Deployment completed!"
-          echo "================================"
-          echo "Bucket: ${AWS_BUCKET_NAME}"
-          echo "Region: ${AWS_DEFAULT_REGION}"
-          echo "Endpoint: ${AWS_ENDPOINT}"
-          echo "Website: https://${AWS_BUCKET_NAME}.s3.ir-central1.arvanstorage.ir"
+          echo "Deployment completed successfully!"
+          echo "Website URL: https://${AWS_BUCKET_NAME}.s3.ir-central1.arvanstorage.ir"
