@@ -41,6 +41,7 @@ const translations = {
         instagramDesc: "روزمرگی‌ها و علایق",
         aparatDesc: "ویدئوهای فارسی",
         youtubeDesc: "ویدئوها و آموزش‌ها",
+        virgoolDesc: "محتوا های متنی",
 
         closingEyebrow: "LET'S BUILD SOMETHING",
         closingTitle: "ایده‌ای برای ساختن دارید؟",
@@ -53,7 +54,7 @@ const translations = {
     en: {
         firstName: "MohammadReza",
         lastName: "Rashidpour",
-        
+
         availability: "Always building and learning",
         intro: "Hi, I'm",
         role: "Backend Developer & Software Product Builder",
@@ -92,6 +93,7 @@ const translations = {
         instagramDesc: "Personal updates & interests",
         aparatDesc: "Persian video content",
         youtubeDesc: "Videos and tutorials",
+        virgoolDesc: "Textual content",
 
         closingEyebrow: "LET'S BUILD SOMETHING",
         closingTitle: "Have an idea worth building?",

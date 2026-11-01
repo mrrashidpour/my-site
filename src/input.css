@@ -93,12 +93,8 @@
 
 
 
-@theme {
-
-  --default-font-family: IRANSansX;
-
-  --font-weight-heavy: 1000;
-
+html[dir="rtl"] * {
+  font-family: IRANSansX, sans-serif;
 }
 
 
@@ -253,6 +249,16 @@ a:focus-visible {
 
 html[data-theme="light"] .cta-button {
     color: #ffffff;
+}
+
+html[dir="rtl"] .principle-box {
+  direction: rtl;
+  text-align: right;
+}
+
+html[dir="ltr"] .principle-box {
+  direction: ltr;
+  text-align: left;
 }
 
 /* Accessibility */
