@@ -4,172 +4,47 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <meta name="theme-color" content="#090d18">
+
   <meta name="description"
     content="محمدرضا رشیدپور؛ توسعه‌دهنده بک‌اند با Go و PHP/Laravel، توسعه‌دهنده ابزارها و افزونه‌های WordPress و علاقه‌مند به DevOps و سیستم‌های توزیع‌شده.">
-  <meta property="og:title" content="محمدرضا رشیدپور | Backend Developer">
-  <meta property="og:description" content="ساخت API، سیستم‌های بک‌اند، افزونه‌های وردپرس و ابزارهای متن‌باز.">
-  <title>محمدرضا رشیدپور</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <meta property="og:title" content="محمدرضا رشیدپور | Backend Developer">
+
+  <meta property="og:description" content="ساخت API، سیستم‌های بک‌اند، افزونه‌های وردپرس و ابزارهای متن‌باز.">
+
+  <meta property="og:type" content="website">
+
+  <title>محمدرضا رشیدپور | Backend Developer</title>
+
+  <link rel="icon" type="image/svg+xml" href="./assets/images/logo.png">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
-  <style>
-    :root {
-      color-scheme: dark;
-      --bg: #090d18;
-      --panel: rgba(18, 25, 43, .76);
-      --line: rgba(148, 163, 184, .16);
-      --muted: #9aa8bf;
-      --text: #edf3ff;
-      --accent: #8b9cff;
-      --accent2: #52dfc0;
-    }
 
-    html[data-theme="light"] {
-      color-scheme: light;
-      --bg: #f4f7fc;
-      --panel: rgba(255, 255, 255, .82);
-      --line: rgba(71, 85, 105, .15);
-      --muted: #64748b;
-      --text: #172033;
-      --accent: #596ee8;
-      --accent2: #0f9f83;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: "Vazirmatn", "DM Sans", sans-serif;
-      transition: background .25s, color .25s;
-    }
-
-    html[lang="en"] body {
-      font-family: "DM Sans", "Vazirmatn", sans-serif;
-    }
-
-    .bg-glow {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .bg-glow:before,
-    .bg-glow:after {
-      content: "";
-      position: absolute;
-      width: 34rem;
-      height: 34rem;
-      border-radius: 999px;
-      filter: blur(100px);
-      opacity: .18;
-    }
-
-    .bg-glow:before {
-      background: #536dfe;
-      top: -17rem;
-      right: -10rem;
-    }
-
-    .bg-glow:after {
-      background: #1cc8a5;
-      bottom: -20rem;
-      left: -12rem;
-    }
-
-    .glass {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      backdrop-filter: blur(18px);
-    }
-
-    .muted {
-      color: var(--muted);
-    }
-
-    .gradient-text {
-      background: linear-gradient(100deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .social-card {
-      border: 1px solid var(--line);
-      background: var(--panel);
-      transition: transform .2s, border-color .2s, background .2s;
-    }
-
-    .social-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--accent);
-    }
-
-    .social-card:focus-visible,
-    button:focus-visible,
-    a:focus-visible {
-      outline: 3px solid var(--accent2);
-      outline-offset: 3px;
-    }
-
-    .pill {
-      border: 1px solid var(--line);
-      background: rgba(127, 146, 180, .08);
-    }
-
-    .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--accent2);
-      box-shadow: 0 0 14px var(--accent2);
-    }
-
-    .theme-btn {
-      border: 1px solid var(--line);
-      background: var(--panel);
-    }
-
-    .avatar-ring {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      padding: 2px;
-    }
-
-    .avatar-inner {
-      background: var(--bg);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-
-      *,
-      *::before,
-      *::after {
-        scroll-behavior: auto !important;
-        transition: none !important;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
 <body>
+
+
   <div class="bg-glow"></div>
   <header class="max-w-6xl mx-auto px-5 sm:px-8 pt-6">
     <nav class="flex items-center justify-between gap-3">
-      <a href="#top" class="font-extrabold tracking-tight text-lg">MR<span class="gradient-text">.</span></a>
+      <a href="#top" class="flex items-center gap-3" aria-label="MohammadReza Rashidpour">
+
+        <img src="./assets/images/logo.png" alt="MR Logo" class="w-10 h-10">
+
+        <span class="font-extrabold tracking-tight text-lg">
+          MR<span class="gradient-text">.</span>
+        </span>
+
+      </a>
       <div class="flex items-center gap-2">
         <button id="langBtn" class="theme-btn rounded-xl px-3 py-2 text-sm font-semibold" type="button"
           aria-label="Change language">EN</button>
@@ -186,6 +61,7 @@
     </nav>
   </header>
 
+
   <main id="top" class="max-w-6xl mx-auto px-5 sm:px-8 pb-20">
     <section class="grid lg:grid-cols-[1.25fr_.75fr] gap-10 lg:gap-16 items-center pt-16 sm:pt-24 pb-16">
       <div>
@@ -193,8 +69,10 @@
           <span class="dot"></span><span data-i18n="availability">در حال ساختن و یادگیری مداوم</span>
         </div>
         <p class="muted text-sm font-semibold mb-3" data-i18n="intro">سلام، من</p>
-        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-[1.35] mb-5">محمدرضا <span
-            class="gradient-text">رشیدپور</span></h1>
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-[1.35] mb-5">
+          <span data-i18n="firstName">محمدرضا</span>
+          <span class="gradient-text" data-i18n="lastName">رشیدپور</span>
+        </h1>
         <h2 class="text-xl sm:text-2xl font-bold mb-5" data-i18n="role">توسعه‌دهنده بک‌اند و سازنده محصولات نرم‌افزاری
         </h2>
         <p class="muted text-base sm:text-lg leading-9 max-w-2xl" data-i18n="bio">
@@ -202,9 +80,10 @@
           می‌کنم و مسیرم را در DevOps، زیرساخت ابری و سیستم‌های توزیع‌شده ادامه می‌دهم.
         </p>
         <div class="flex flex-wrap gap-3 mt-8">
-          <a href="#links" class="rounded-xl px-5 py-3 font-bold text-sm text-slate-950"
-            style="background:linear-gradient(100deg,var(--accent),var(--accent2))" data-i18n="ctaLinks">شبکه‌ها و
-            فعالیت‌ها</a>
+          <a href="#links" class="cta-button rounded-xl px-5 py-3 font-bold text-sm"
+            style="background:linear-gradient(100deg,var(--accent),var(--accent2))" data-i18n="ctaLinks">
+            شبکه‌ها و فعالیت‌ها
+          </a>
           <a href="https://github.com/mrrashidpour" target="_blank" rel="noopener noreferrer"
             class="theme-btn rounded-xl px-5 py-3 font-bold text-sm" data-i18n="ctaGithub">مشاهده GitHub</a>
         </div>
@@ -217,12 +96,15 @@
         </div>
       </div>
 
-      <aside class="glass rounded-[2rem] p-7 sm:p-8 relative overflow-hidden">
+      <aside class="glass rounded-8 p-7 sm:p-8 relative overflow-hidden">
         <div class="absolute -top-16 -left-16 w-48 h-48 rounded-full blur-3xl opacity-20"
           style="background:var(--accent)"></div>
         <div class="relative flex flex-col items-center text-center">
           <div class="avatar-ring rounded-full mb-5">
-            <div class="avatar-inner rounded-full w-28 h-28 grid place-items-center text-3xl font-extrabold">MR</div>
+            <div
+              class="avatar-inner rounded-full w-28 h-28 grid place-items-center text-3xl font-extrabold overflow-hidden">
+              <img src="./assets/images/logo.png" alt="MR Logo" class="w-full">
+            </div>
           </div>
           <h3 class="text-xl font-extrabold mb-1">MohammadReza Rashidpour</h3>
           <p class="muted text-sm mb-6" data-i18n="cardRole">Backend Developer · WordPress Developer</p>
@@ -341,68 +223,8 @@
     </footer>
   </main>
 
-  <script>
-    const translations = {
-      fa: {
-        availability: "در حال ساختن و یادگیری مداوم", intro: "سلام، من", role: "توسعه‌دهنده بک‌اند و سازنده محصولات نرم‌افزاری",
-        bio: "با Go و PHP/Laravel سیستم‌های بک‌اند و API می‌سازم؛ در کنار آن روی توسعه افزونه‌ها و ابزارهای WordPress کار می‌کنم و مسیرم را در DevOps، زیرساخت ابری و سیستم‌های توزیع‌شده ادامه می‌دهم.",
-        ctaLinks: "شبکه‌ها و فعالیت‌ها", ctaGithub: "مشاهده GitHub", cardRole: "Backend Developer · WordPress Developer", focusTitle: "تمرکز حرفه‌ای",
-        focus1: "طراحی و توسعه API", focus2: "ابزارها و افزونه‌های متن‌باز", focus3: "زیرساخت و استقرار نرم‌افزار", principleTitle: "رویکرد من",
-        principle: "یادگیری عمیق، ساخت راه‌حل‌های کاربردی و به اشتراک‌گذاری ابزارهایی که کار توسعه‌دهندگان را ساده‌تر می‌کنند.",
-        value1Title: "مهندسی بک‌اند", value1: "ساخت سرویس‌ها، APIها و منطق قابل نگهداری برای محصولات نرم‌افزاری.",
-        value2Title: "اکوسیستم WordPress", value2: "توسعه افزونه، ابزار و راهکارهای سفارشی برای کسب‌وکارهای مبتنی بر وردپرس.",
-        value3Title: "زیرساخت و یادگیری", value3: "علاقه‌مند به لینوکس، کانتینرها، CI/CD و معماری سیستم‌های مقیاس‌پذیر.",
-        connectEyebrow: "FIND ME ONLINE", connectTitle: "در فضای آنلاین با من در ارتباط باشید", connectDesc: "برای دیدن پروژه‌ها، نوشته‌ها و ویدئوهایم یکی از مسیرها را انتخاب کنید.",
-        githubDesc: "پروژه‌ها و کدهای من", linkedinDesc: "سوابق و ارتباط حرفه‌ای", wpDesc: "افزونه‌ها و مشارکت‌های وردپرس",
-        instagramDesc: "روزمرگی‌ها و علایق", aparatDesc: "ویدئوهای فارسی", youtubeDesc: "ویدئوها و آموزش‌ها",
-        closingEyebrow: "LET'S BUILD SOMETHING", closingTitle: "ایده‌ای برای ساختن دارید؟", closingText: "برای گفت‌وگوهای فنی، همکاری‌های متن‌باز و ارتباط حرفه‌ای، از طریق شبکه‌های بالا با من در تماس باشید.",
-        closingCta: "ارتباط در LinkedIn ↗", footer: "ساخته‌شده با علاقه به مهندسی نرم‌افزار"
-      },
-      en: {
-        availability: "Always building and learning", intro: "Hi, I'm", role: "Backend Developer & Software Product Builder",
-        bio: "I build backend systems and APIs with Go and PHP/Laravel. I also develop WordPress plugins and tools, while growing my skills in DevOps, cloud infrastructure, and distributed systems.",
-        ctaLinks: "Explore my profiles", ctaGithub: "View GitHub", cardRole: "Backend Developer · WordPress Developer", focusTitle: "WHAT I FOCUS ON",
-        focus1: "API design & development", focus2: "Open-source tools & plugins", focus3: "Infrastructure & deployment", principleTitle: "My approach",
-        principle: "Deep learning, practical engineering, and sharing tools that make developers' work easier.",
-        value1Title: "Backend Engineering", value1: "Building services, APIs, and maintainable application logic.",
-        value2Title: "WordPress Ecosystem", value2: "Creating plugins, tools, and custom solutions for WordPress-powered businesses.",
-        value3Title: "Infrastructure & Growth", value3: "Exploring Linux, containers, CI/CD, and scalable system architecture.",
-        connectEyebrow: "FIND ME ONLINE", connectTitle: "Connect with me online", connectDesc: "Explore my projects, professional profile, and video content.",
-        githubDesc: "My projects and code", linkedinDesc: "Professional profile & network", wpDesc: "WordPress plugins & contributions",
-        instagramDesc: "Personal updates & interests", aparatDesc: "Persian video content", youtubeDesc: "Videos and tutorials",
-        closingEyebrow: "LET'S BUILD SOMETHING", closingTitle: "Have an idea worth building?", closingText: "Reach out through the profiles above for technical conversations, open-source collaboration, and professional connections.",
-        closingCta: "Connect on LinkedIn ↗", footer: "Built with a passion for software engineering"
-      }
-    };
-    let lang = localStorage.getItem("profile-lang") || "fa";
-    const root = document.documentElement;
-    function setLang(next) {
-      lang = next; root.lang = lang; root.dir = lang === "fa" ? "rtl" : "ltr";
-      document.querySelectorAll("[data-i18n]").forEach(el => {
-        const key = el.dataset.i18n;
-        if (translations[lang][key]) el.textContent = translations[lang][key];
-      });
-      document.getElementById("langBtn").textContent = lang === "fa" ? "EN" : "FA";
-      document.title = lang === "fa" ? "محمدرضا رشیدپور | کارت معرفی" : "MohammadReza Rashidpour | Personal Card";
-      document.querySelector('meta[name="description"]').content = lang === "fa"
-        ? "محمدرضا رشیدپور؛ توسعه‌دهنده بک‌اند با Go و PHP/Laravel، توسعه‌دهنده ابزارها و افزونه‌های WordPress و علاقه‌مند به DevOps و سیستم‌های توزیع‌شده."
-        : "MohammadReza Rashidpour — Backend Developer working with Go and PHP/Laravel, building WordPress tools and exploring DevOps and distributed systems.";
-      localStorage.setItem("profile-lang", lang);
-    }
-    function setTheme(theme) {
-      root.dataset.theme = theme;
-      document.getElementById("themeIcon").innerHTML = theme === "dark"
-        ? '<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>'
-        : '<path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"/>';
-      document.querySelector('meta[name="theme-color"]').content = theme === "dark" ? "#090d18" : "#f4f7fc";
-      localStorage.setItem("profile-theme", theme);
-    }
-    document.getElementById("langBtn").addEventListener("click", () => setLang(lang === "fa" ? "en" : "fa"));
-    document.getElementById("themeBtn").addEventListener("click", () => setTheme(root.dataset.theme === "dark" ? "light" : "dark"));
-    setLang(lang);
-    setTheme(localStorage.getItem("profile-theme") || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"));
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+
+  <script src="./src/main.js" defer></script>
 </body>
 
 </html>
