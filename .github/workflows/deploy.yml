@@ -1,0 +1,57 @@
+name: Deploy to Arvan Cloud S3
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: s3
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Deploy to S3 with public access
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+      run: |
+        # آپلود فایل‌ها با دسترسی عمومی
+        aws s3 sync . s3://${{ secrets.AWS_BUCKET_NAME }} \
+          --exclude ".git/*" \
+          --exclude ".github/*" \
+          --exclude "README.md" \
+          --exclude ".gitignore" \
+          --delete \
+          --acl public-read \
+          --endpoint-url ${{ secrets.AWS_ENDPOINT }}
+        
+        # تنظیم Cache برای فایل‌های HTML
+        aws s3 sync . s3://${{ secrets.AWS_BUCKET_NAME }} \
+          --exclude "*" \
+          --include "*.html" \
+          --cache-control "no-cache, no-store, must-revalidate" \
+          --acl public-read \
+          --endpoint-url ${{ secrets.AWS_ENDPOINT }}
+        
+        # تنظیم Cache برای فایل‌های استاتیک (تصاویر، CSS، JS)
+        aws s3 sync . s3://${{ secrets.AWS_BUCKET_NAME }} \
+          --exclude "*" \
+          --include "*.png" \
+          --include "*.jpg" \
+          --include "*.jpeg" \
+          --include "*.gif" \
+          --include "*.svg" \
+          --include "*.css" \
+          --include "*.js" \
+          --cache-control "max-age=86400" \
+          --acl public-read \
+          --endpoint-url ${{ secrets.AWS_ENDPOINT }}
+        
+        echo "✅ Deployment completed successfully!"
+        echo "🌐 Website URL: https://${{ secrets.AWS_BUCKET_NAME }}.s3.${{ secrets.AWS_REGION }}.arvanstorage.ir"
