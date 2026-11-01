@@ -9,49 +9,69 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     environment: s3
-    
+
+    env:
+      # Arvan Cloud S3 Configuration
+      AWS_ENDPOINT: https://s3.ir-central1.arvanstorage.ir
+      AWS_DEFAULT_REGION: ir-central1
+      AWS_BUCKET_NAME: mrsite
+
+      # GitHub Environment Secrets
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    
-    - name: Deploy to S3 with public access
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
-      run: |
-        # آپلود فایل‌ها با دسترسی عمومی
-        aws s3 sync . s3://${{ secrets.AWS_BUCKET_NAME }} \
-          --exclude ".git/*" \
-          --exclude ".github/*" \
-          --exclude "README.md" \
-          --exclude ".gitignore" \
-          --delete \
-          --acl public-read \
-          --endpoint-url ${{ secrets.AWS_ENDPOINT }}
-        
-        # تنظیم Cache برای فایل‌های HTML
-        aws s3 sync . s3://${{ secrets.AWS_BUCKET_NAME }} \
-          --exclude "*" \
-          --include "*.html" \
-          --cache-control "no-cache, no-store, must-revalidate" \
-          --acl public-read \
-          --endpoint-url ${{ secrets.AWS_ENDPOINT }}
-        
-        # تنظیم Cache برای فایل‌های استاتیک (تصاویر، CSS، JS)
-        aws s3 sync . s3://${{ secrets.AWS_BUCKET_NAME }} \
-          --exclude "*" \
-          --include "*.png" \
-          --include "*.jpg" \
-          --include "*.jpeg" \
-          --include "*.gif" \
-          --include "*.svg" \
-          --include "*.css" \
-          --include "*.js" \
-          --cache-control "max-age=86400" \
-          --acl public-read \
-          --endpoint-url ${{ secrets.AWS_ENDPOINT }}
-        
-        echo "✅ Deployment completed successfully!"
-        echo "🌐 Website URL: https://${{ secrets.AWS_BUCKET_NAME }}.s3.${{ secrets.AWS_REGION }}.arvanstorage.ir"
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y awscli
+
+      - name: Verify AWS Configuration
+        run: |
+          if [ -z "$AWS_ACCESS_KEY_ID" ]; then
+            echo "AWS_ACCESS_KEY_ID is missing!"
+            exit 1
+          fi
+
+          if [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
+            echo "AWS_SECRET_ACCESS_KEY is missing!"
+            exit 1
+          fi
+
+          echo "AWS configuration is ready."
+
+      - name: Deploy to Arvan Cloud S3
+        run: |
+          echo "Starting deployment..."
+
+          # Upload HTML files
+          aws s3 sync . "s3://${AWS_BUCKET_NAME}" \
+            --exclude "*" \
+            --include "*.html" \
+            --cache-control "no-cache, no-store, must-revalidate" \
+            --acl public-read \
+            --endpoint-url "$AWS_ENDPOINT"
+
+          # Upload static files
+          aws s3 sync . "s3://${AWS_BUCKET_NAME}" \
+            --exclude "*" \
+            --include "*.css" \
+            --include "*.js" \
+            --include "*.svg" \
+            --include "*.png" \
+            --include "*.jpg" \
+            --include "*.jpeg" \
+            --include "*.gif" \
+            --include "*.webp" \
+            --include "*.ico" \
+            --cache-control "public, max-age=86400" \
+            --acl public-read \
+            --endpoint-url "$AWS_ENDPOINT"
+
+          echo "Deployment completed successfully!"
+          echo "Website URL: https://${AWS_BUCKET_NAME}.s3.ir-central1.arvanstorage.ir"
