@@ -1,9 +1,11 @@
+
 name: Deploy to Arvan Cloud S3
 
 on:
   push:
     branches:
       - master
+
   workflow_dispatch:
 
 jobs:
@@ -23,33 +25,57 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     steps:
+      # 1. Checkout Repository
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install AWS CLI
+      # 2. Install AWS CLI v2
+      - name: Install AWS CLI v2
         run: |
-          sudo apt-get update
-          sudo apt-get install -y awscli
+          curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 
+          unzip -q awscliv2.zip
+
+          sudo ./aws/install
+
+          aws --version
+
+      # 3. Verify Configuration
       - name: Verify AWS Configuration
+        shell: bash
         run: |
+          set -e
+
           if [ -z "$AWS_ACCESS_KEY_ID" ]; then
-            echo "AWS_ACCESS_KEY_ID is missing!"
+            echo "ERROR: AWS_ACCESS_KEY_ID is missing!"
             exit 1
           fi
 
           if [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
-            echo "AWS_SECRET_ACCESS_KEY is missing!"
+            echo "ERROR: AWS_SECRET_ACCESS_KEY is missing!"
+            exit 1
+          fi
+
+          if [ -z "$AWS_ENDPOINT" ]; then
+            echo "ERROR: AWS_ENDPOINT is missing!"
+            exit 1
+          fi
+
+          if [ -z "$AWS_BUCKET_NAME" ]; then
+            echo "ERROR: AWS_BUCKET_NAME is missing!"
             exit 1
           fi
 
           echo "AWS configuration is ready."
 
-      - name: Deploy to Arvan Cloud S3
+      # 4. Upload HTML Files
+      - name: Deploy HTML files
+        shell: bash
         run: |
-          echo "Starting deployment..."
+          set -e
 
-          # Upload HTML files
+          echo "Uploading HTML files..."
+
           aws s3 sync . "s3://${AWS_BUCKET_NAME}" \
             --exclude "*" \
             --include "*.html" \
@@ -57,7 +83,14 @@ jobs:
             --acl public-read \
             --endpoint-url "$AWS_ENDPOINT"
 
-          # Upload static files
+      # 5. Upload Static Assets
+      - name: Deploy Static Assets
+        shell: bash
+        run: |
+          set -e
+
+          echo "Uploading static assets..."
+
           aws s3 sync . "s3://${AWS_BUCKET_NAME}" \
             --exclude "*" \
             --include "*.css" \
@@ -73,5 +106,13 @@ jobs:
             --acl public-read \
             --endpoint-url "$AWS_ENDPOINT"
 
-          echo "Deployment completed successfully!"
-          echo "Website URL: https://${AWS_BUCKET_NAME}.s3.ir-central1.arvanstorage.ir"
+      # 6. Deployment Completed
+      - name: Deployment Summary
+        run: |
+          echo "================================"
+          echo "Deployment completed!"
+          echo "================================"
+          echo "Bucket: ${AWS_BUCKET_NAME}"
+          echo "Region: ${AWS_DEFAULT_REGION}"
+          echo "Endpoint: ${AWS_ENDPOINT}"
+          echo "Website: https://${AWS_BUCKET_NAME}.s3.ir-central1.arvanstorage.ir"
