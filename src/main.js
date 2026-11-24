@@ -129,8 +129,8 @@ function setLang(next) {
         lang === "fa" ? "EN" : "FA";
 
     document.title = lang === "fa"
-        ? "محمدرضا رشیدپور | کارت معرفی"
-        : "MohammadReza Rashidpour | Personal Card";
+        ? "محمدرضا رشیدپور"
+        : "MohammadReza Rashidpour";
 
     document.querySelector('meta[name="description"]').content =
         lang === "fa"
